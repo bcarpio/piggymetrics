@@ -1,0 +1,54 @@
+# .outcomeops.yaml - Repository configuration for OutcomeOps AI Assist
+
+version: "1.0"
+
+code_generation:
+  backend: "java"
+
+  # Source roots follow standard Maven conventions (defaults are fine)
+  # source_roots: ["src/main/java"]
+
+  custom_guidelines: |
+    This is a Spring Cloud microservices demo using Spring Boot 2.0 and Spring Cloud Finchley.
+    Each top-level directory is an independent Maven module with its own pom.xml and Dockerfile.
+    Services communicate via Feign clients with Hystrix circuit breakers.
+    OAuth2 is used for authentication (auth-service issues tokens, other services validate).
+    All services register with Eureka (registry) and pull config from Spring Cloud Config (config).
+    MongoDB is the data store - each service has its own database instance.
+
+  additional_kb_queries:
+    - "Spring Boot microservices patterns"
+    - "Java Maven project structure"
+    - "Spring Cloud service discovery"
+
+project_context: |
+  PiggyMetrics is a microservice architecture demo - a personal finance advisor application.
+
+  Architecture:
+  - 3 core services: account-service, statistics-service, notification-service
+  - 5 infrastructure services: config, registry (Eureka), gateway (Zuul), auth-service, monitoring (Hystrix Dashboard)
+  - 1 aggregator: turbine-stream-service
+
+  Tech stack:
+  - Java 8, Spring Boot 2.0.3, Spring Cloud Finchley
+  - Spring Cloud Config, Eureka, Zuul, Feign, Hystrix, Sleuth
+  - MongoDB (per-service databases)
+  - RabbitMQ (Spring Cloud Bus, Turbine Stream)
+  - OAuth2 (password + client credentials grants)
+  - Docker Compose for orchestration
+  - Maven multi-module build
+
+  Project structure:
+  - {service-name}/src/main/java/com/piggymetrics/{service}/ - Service source code
+  - {service-name}/src/test/java/ - Unit and integration tests
+  - config/src/main/resources/shared/ - Centralized config per service
+  - Each service has: Application.java, Controller, Service, Repository, Domain layers
+
+testing:
+  framework: "junit"
+  test_directory: "src/test/java"
+  min_coverage: 80
+
+infrastructure:
+  tool: "docker"
+  directory: "."
